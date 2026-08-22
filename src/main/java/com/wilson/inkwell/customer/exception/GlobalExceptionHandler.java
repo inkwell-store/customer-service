@@ -1,0 +1,8 @@
+package com.wilson.inkwell.customer.exception;
+
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+    
+}
