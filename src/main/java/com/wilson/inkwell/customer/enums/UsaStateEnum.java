@@ -1,5 +1,7 @@
 package com.wilson.inkwell.customer.enums;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 public enum UsaStateEnum {
 
     ALABAMA("AL", "Alabama"),
@@ -74,25 +76,33 @@ public enum UsaStateEnum {
      * Look up state by two-letter abbreviation (case-insensitive).
      */
     public static UsaStateEnum valueOfAbbreviation(String abbreviation) {
-        if (abbreviation == null) return null;
         for (UsaStateEnum state : values()) {
             if (state.getAbbreviation().equalsIgnoreCase(abbreviation)) {
                 return state;
             }
         }
-        return null;
+        throw new IllegalArgumentException("Unknown USA state abbreviation: " + abbreviation);
     }
 
     /**
      * Look up state by full name (case-insensitive).
      */
     public static UsaStateEnum valueOfName(String name) {
-        if (name == null) return null;
         for (UsaStateEnum state : values()) {
             if (state.getName().equalsIgnoreCase(name)) {
                 return state;
             }
         }
-        return null;
+        throw new IllegalArgumentException("Unknown USA state: " + name);
+    }
+
+    @JsonCreator
+    public static UsaStateEnum fromAbbreviation(String abbreviation) {
+        for (UsaStateEnum state : values()) {
+            if (state.abbreviation.equalsIgnoreCase(abbreviation)) {
+                return state;
+            }
+        }
+        throw new IllegalArgumentException("Unknown USA state abbreviation: " + abbreviation);
     }
 }

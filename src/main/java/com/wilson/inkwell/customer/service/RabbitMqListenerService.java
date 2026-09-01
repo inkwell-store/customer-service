@@ -14,9 +14,9 @@ public class RabbitMqListenerService {
         this.customerService = customerService;
     }
 
-    @RabbitListener(queues = "customer.credential-queue")
-    public void processCredentialCreationEvent(CredentialCreationEvent event) {
-        customerService.createNewCustomer(event.credentialKey());
-    }
+    // @RabbitListener(queues = "customer.credential-queue")
+    // public void processCredentialCreationEvent(CredentialCreationEvent event) {
+    //     customerService.createNewCustomer(event.credentialKey());
+    // }
 
 }

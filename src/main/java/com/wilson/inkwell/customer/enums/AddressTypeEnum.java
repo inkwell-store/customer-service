@@ -1,7 +1,7 @@
 package com.wilson.inkwell.customer.enums;
 
 public enum AddressTypeEnum {
-    HOUSE,
-    APARTMENT,
-    BUSINESS
+    SHIPPING,
+    BILLING,
+    BILLING_AND_SHIPPING
 }

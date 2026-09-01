@@ -1,23 +1,29 @@
 package com.wilson.inkwell.customer.service;
 
 import java.time.Instant;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.wilson.inkwell.customer.dto.NewAddressRequest;
+import com.wilson.inkwell.customer.entity.Address;
 import com.wilson.inkwell.customer.entity.Customer;
 import com.wilson.inkwell.customer.exception.CustomerAlreadyRegisteredException;
+import com.wilson.inkwell.customer.exception.CustomerNotFoundException;
+import com.wilson.inkwell.customer.repository.AddressRepository;
 import com.wilson.inkwell.customer.repository.CustomerRepository;
 
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class CustomerService {
 
     private final CustomerRepository customerRepository;
-
-    public CustomerService(CustomerRepository customerRepository) {
-        this.customerRepository = customerRepository;
-    }
 
     public void createNewCustomer(UUID credentialUuid) {
 
@@ -34,5 +40,8 @@ public class CustomerService {
         }
 
     }
+
+
+
 
 }

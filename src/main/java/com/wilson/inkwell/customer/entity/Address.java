@@ -4,6 +4,7 @@ import com.wilson.inkwell.customer.enums.AddressTypeEnum;
 import com.wilson.inkwell.customer.enums.UsaStateEnum;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -36,22 +37,29 @@ public class Address {
     @EqualsAndHashCode.Include
     private Long id;
 
+    @Column(name = "street", nullable = false)
     private String street;
     
+    @Column(name = "number", nullable = false)
     private Integer number;
 
+    @Column(name = "city", nullable = false)
     private String city;
 
-    @Enumerated(EnumType.STRING)
+    @Column(name = "state", nullable = false)
     private UsaStateEnum state;
 
+    @Column(name = "postal_code", nullable = false)
     private String postalCode;
 
+    @Column(name = "line")
     private String line;
-
+    
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type", nullable = false)
     private AddressTypeEnum type;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 

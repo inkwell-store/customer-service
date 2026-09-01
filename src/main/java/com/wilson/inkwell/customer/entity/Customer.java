@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -42,6 +43,7 @@ public class Customer {
     private LocalDate dateOfBirth;
 
     // attribute that references a credential from Credential Service
+    @Column(nullable = false, unique = true)
     private UUID credentialId;
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
