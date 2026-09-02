@@ -7,6 +7,7 @@ import com.wilson.inkwell.customer.dto.NewAddressRequest;
 import com.wilson.inkwell.customer.dto.UpdateAddressRequest;
 import com.wilson.inkwell.customer.service.AddressService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Set;
@@ -29,7 +30,7 @@ public class AddressController {
     private final AddressService addressService;
 
     @PostMapping
-    public ResponseEntity<Void> handleNewAddressRequest(@RequestBody NewAddressRequest newAddress) {
+    public ResponseEntity<Void> handleNewAddressRequest(@Valid @RequestBody NewAddressRequest newAddress) {
         addressService.addNewAddress(newAddress);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
