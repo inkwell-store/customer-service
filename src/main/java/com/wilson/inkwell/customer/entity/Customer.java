@@ -34,19 +34,23 @@ public class Customer {
     @EqualsAndHashCode.Include
     private UUID id;
 
+    @Column(name = "first_name", nullable = false)
     private String firstName;
 
+    @Column(name = "last_name", nullable = false)
     private String lastName;
 
+    @Column(name = "created_at", nullable = false)
     private Instant createdAt;
 
+    @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
 
     // attribute that references a credential from Credential Service
-    @Column(nullable = false, unique = true)
+    @Column(name = "credential_id", nullable = false, unique = true)
     private UUID credentialId;
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private Set<Address> addresses = new HashSet<>();
-    
+
 }
