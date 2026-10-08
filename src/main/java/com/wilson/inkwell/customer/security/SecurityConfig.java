@@ -18,7 +18,7 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         
-        String BASE_URL = "/api/customer/";
+        String BASE_URL = "/api/customers/";
 
         httpSecurity.authorizeHttpRequests(auth -> auth
             .requestMatchers("/h2-console/**").permitAll()

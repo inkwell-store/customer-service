@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @RestController
-@RequestMapping("/api/customer/me/address")
+@RequestMapping("/api/customers/me/addresses")
 @RequiredArgsConstructor
 public class AddressController {
 
