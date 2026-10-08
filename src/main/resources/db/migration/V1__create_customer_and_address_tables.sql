@@ -1,0 +1,23 @@
+CREATE TABLE CUSTOMER_TBL(
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    first_name VARCHAR NOT NULL DEFAULT 'NOT_SET_YET',
+    last_name VARCHAR NOT NULL DEFAULT 'NOT_SET_YET',
+    created_at TIMESTAMPTZ NOT NULL,
+    date_of_birth DATE,
+    credential_id UUID UNIQUE NOT NULL
+);
+
+CREATE TABLE ADDRESS_TBL(
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    name VARCHAR,
+    street VARCHAR NOT NULL,
+    number INT NOT NULL,
+    city VARCHAR NOT NULL,
+    state VARCHAR NOT NULL,
+    postal_code VARCHAR NOT NULL,
+    line VARCHAR,
+    type VARCHAR NOT NULL,
+    customer_id UUID NOT NULL,
+
+    CONSTRAINT fk_customer FOREIGN KEY (customer_id) REFERENCES CUSTOMER_TBL(id)
+);
