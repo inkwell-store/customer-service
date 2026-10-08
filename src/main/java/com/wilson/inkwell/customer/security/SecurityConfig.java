@@ -24,6 +24,7 @@ public class SecurityConfig {
             .requestMatchers("/h2-console/**").permitAll()
             .requestMatchers(HttpMethod.GET, BASE_URL + "hello").permitAll()
             // All resources under /me should be authenticated and have the customer authority
+            // .requestMatchers(BASE_URL + "me/**").authenticated() 
             .requestMatchers(BASE_URL + "me/**").hasAuthority(RoleEnum.ROLE_CUSTOMER.toString())
             .anyRequest().authenticated()    
         )

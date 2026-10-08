@@ -14,6 +14,7 @@ VALUES (
 
 -- Add three addresses for wilson
 INSERT INTO ADDRESS_TBL (
+    name,
     street,
     number,
     city,
@@ -25,6 +26,7 @@ INSERT INTO ADDRESS_TBL (
 )
 VALUES
     (
+        'My house',
         'Main Street',
         742,
         'Austin',
@@ -35,6 +37,7 @@ VALUES
         'd93b80e3-11c3-4829-b558-fa51c82d2868'
     ),
     (
+        'Company',
         'Market Street',
         135,
         'San Francisco',
@@ -45,12 +48,13 @@ VALUES
         'd93b80e3-11c3-4829-b558-fa51c82d2868'
     ),
     (
+        'Some custom name',
         'Lake Shore Drive',
         2250,
         'Chicago',
         'IL',
         '60611',
         'Unit 1203',
-        'SHIPPING',
+        'BILLING_AND_SHIPPING',
         'd93b80e3-11c3-4829-b558-fa51c82d2868'
     );

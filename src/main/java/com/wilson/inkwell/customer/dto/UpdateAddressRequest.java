@@ -8,6 +8,7 @@ import com.wilson.inkwell.customer.enums.UsaStateEnum;
  * information will be recovered from the SecurityContextHolder.
  */
 public record UpdateAddressRequest(
+    String name,
     String street,
     Integer number,
     String city,

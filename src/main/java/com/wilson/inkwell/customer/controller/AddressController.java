@@ -23,19 +23,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @RestController
-@RequestMapping("/api/customer/me/address/")
+@RequestMapping("/api/customer/me/address")
 @RequiredArgsConstructor
 public class AddressController {
 
     private final AddressService addressService;
 
     @PostMapping
-    public ResponseEntity<Void> handleNewAddressRequest(@Valid @RequestBody NewAddressRequest newAddress) {
-        addressService.addNewAddress(newAddress);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+    public ResponseEntity<AddressResponse> handleNewAddressRequest(@Valid @RequestBody NewAddressRequest newAddress) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(addressService.addNewAddress(newAddress));
     }
 
-    @GetMapping("{addressId}")
+    @GetMapping("/{addressId}")
     public ResponseEntity<AddressResponse> handleGetAddressById(@PathVariable(name = "addressId") long id) {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(
             addressService.getAddressById(id)
@@ -49,19 +48,18 @@ public class AddressController {
         );
     }
 
-    @DeleteMapping("{addressId}")
+    @DeleteMapping("/{addressId}")
     public ResponseEntity<Void> handleDeleteAddress(@PathVariable(name = "addressId") long id) {
         addressService.deleteAddressById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @PatchMapping("{addressId}")
-    public ResponseEntity<Void> handlePatchAddress(
+    @PatchMapping("/{addressId}")
+    public ResponseEntity<AddressResponse> handlePatchAddress(
         @RequestBody UpdateAddressRequest body,
         @PathVariable(name = "addressId") long id
     ) {
-        addressService.updateAddressById(body, id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.status(HttpStatus.OK).body(addressService.updateAddressById(body, id));
     }
     
 }

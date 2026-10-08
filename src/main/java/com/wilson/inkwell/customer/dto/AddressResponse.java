@@ -5,6 +5,7 @@ import com.wilson.inkwell.customer.enums.UsaStateEnum;
 
 public record AddressResponse(
     long id,
+    String name,
     String street,
     int number,
     String city,

@@ -37,6 +37,9 @@ public class Address {
     @EqualsAndHashCode.Include
     private Long id;
 
+    @Column(name = "name")
+    private String name;
+
     @Column(name = "street", nullable = false)
     private String street;
     

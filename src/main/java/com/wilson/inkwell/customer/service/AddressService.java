@@ -28,16 +28,17 @@ public class AddressService {
     private final CustomerRepository customerRepository;
 
     @Transactional
-    public void addNewAddress(NewAddressRequest newAddress) {
+    public AddressResponse addNewAddress(NewAddressRequest newAddress) {
         
         // grab the UUID from the SecurityContextHolder
-        UUID uuid = UUID.fromString(SecurityContextHolder.getContext().getAuthentication().getName());
+        UUID uuid = getAuthenticatedUuid();
 
         Customer customer = customerRepository.getCustomerByCredentialId(uuid).orElseThrow(
             () -> new CustomerNotFoundException("Customer not found")
         );
 
         Address address = new Address();
+        address.setName(newAddress.name());
         address.setCity(newAddress.city());
         address.setStreet(newAddress.street());
         address.setNumber(newAddress.number());
@@ -47,12 +48,12 @@ public class AddressService {
         address.setLine(newAddress.line());
         address.setCustomer(customer);
 
-        addressRepository.save(address);
+        return convertFromEntityToDto(addressRepository.save(address));
 
     }
     
     public AddressResponse getAddressById(long id) {
-        UUID uuid = UUID.fromString(SecurityContextHolder.getContext().getAuthentication().getName());
+        UUID uuid = getAuthenticatedUuid();
         
         Address address = addressRepository.getAddressByIdForCustomer(id, uuid).orElseThrow(
             () -> new AddressNotFoundException("Address not found")
@@ -62,7 +63,7 @@ public class AddressService {
     }
 
     public Set<AddressResponse> getAddressList() {
-        UUID uuid = UUID.fromString(SecurityContextHolder.getContext().getAuthentication().getName());
+        UUID uuid = getAuthenticatedUuid();
         Set<AddressResponse> addressList = new HashSet<>();
 
         addressRepository.getAddressListForCustomer(uuid).forEach(
@@ -73,7 +74,7 @@ public class AddressService {
     }
 
     public void deleteAddressById(long id) {
-        UUID uuid = UUID.fromString(SecurityContextHolder.getContext().getAuthentication().getName());
+        UUID uuid = getAuthenticatedUuid();
         
         Address address = addressRepository.getAddressByIdForCustomer(id, uuid).orElseThrow(
             () -> new AddressNotFoundException("Address not found")
@@ -82,15 +83,16 @@ public class AddressService {
         addressRepository.delete(address);
     }
 
-    public void updateAddressById(UpdateAddressRequest request, long id) {
+    public AddressResponse updateAddressById(UpdateAddressRequest request, long id) {
 
-        UUID uuid = UUID.fromString(SecurityContextHolder.getContext().getAuthentication().getName());
+        UUID uuid = getAuthenticatedUuid();
         
         Address address = addressRepository.getAddressByIdForCustomer(id, uuid).orElseThrow(
             () -> new AddressNotFoundException("Address not found")
         );
 
         // TODO is there a better pattern for this?
+        if(request.name() != null) address.setName(request.name()); 
         if(request.city() != null) address.setCity(request.city()); 
         if(request.street() != null) address.setStreet(request.street()); 
         if(request.state() != null) address.setState(request.state()); 
@@ -99,14 +101,15 @@ public class AddressService {
         if(request.line() != null) address.setLine(request.line());
         if(request.type() != null) address.setType(request.type());
 
-        addressRepository.save(address);
+        return convertFromEntityToDto(addressRepository.save(address));
 
     }
 
     private AddressResponse convertFromEntityToDto(Address entity) {
 
         return new AddressResponse(
-            entity.getId(), 
+            entity.getId(),
+            entity.getName(), 
             entity.getStreet(), 
             entity.getNumber(), 
             entity.getCity(), 
@@ -116,5 +119,9 @@ public class AddressService {
             entity.getType()
         );
 
+    }
+
+    private UUID getAuthenticatedUuid() {
+        return UUID.fromString(SecurityContextHolder.getContext().getAuthentication().getName());
     }
 }
