@@ -1,9 +1,10 @@
 CREATE TABLE CUSTOMER_TBL(
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    first_name VARCHAR NOT NULL DEFAULT 'NOT_SET_YET',
-    last_name VARCHAR NOT NULL DEFAULT 'NOT_SET_YET',
+    first_name VARCHAR NOT NULL,
+    last_name VARCHAR NOT NULL,
     created_at TIMESTAMPTZ NOT NULL,
     date_of_birth DATE,
+    photo VARCHAR,
     credential_id UUID UNIQUE NOT NULL
 );
 
