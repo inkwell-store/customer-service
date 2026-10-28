@@ -3,7 +3,6 @@ package com.wilson.inkwell.customer.entity;
 import com.wilson.inkwell.customer.enums.AddressTypeEnum;
 import com.wilson.inkwell.customer.enums.UsaStateEnum;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
