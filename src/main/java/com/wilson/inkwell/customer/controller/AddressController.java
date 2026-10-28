@@ -22,8 +22,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.wilson.inkwell.customer.utils.ResourceName;
+
+
 @RestController
-@RequestMapping("/api/customers/me/addresses")
+@RequestMapping("/" + ResourceName.API + "/" + ResourceName.CUSTOMERS + "/" + ResourceName.ME + "/"+ ResourceName.ADDRESSES)
 @RequiredArgsConstructor
 public class AddressController {
 

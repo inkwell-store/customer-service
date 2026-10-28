@@ -20,4 +20,7 @@ public interface AddressRepository extends JpaRepository<Address, Long> {
 
     @Query("SELECT a FROM Address a WHERE a.customer.credentialId = :credentialId")
     Set<Address> getAddressListForCustomer(@Param("credentialId") UUID credentialId);
+
+    @Query("SELECT COUNT(*) FROM Address a WHERE a.customer.credentialId = :credentialId AND a.type = 'BILLING' OR a.type = 'BILLING_AND_SHIPPING'")
+    Integer getBillingAddressCount(@Param("credentialId") UUID credentialId);
 }

@@ -10,6 +10,7 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtGra
 import org.springframework.security.web.SecurityFilterChain;
 
 import com.wilson.inkwell.customer.enums.RoleEnum;
+import com.wilson.inkwell.customer.utils.ResourceName;
 
 @Configuration
 @EnableWebSecurity
@@ -17,15 +18,14 @@ public class SecurityConfig {
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-        
-        String BASE_URL = "/api/customers/";
+
+        String BASE_URL = "/" + ResourceName.API + "/" + ResourceName.CUSTOMERS;
 
         httpSecurity.authorizeHttpRequests(auth -> auth
             .requestMatchers("/h2-console/**").permitAll()
             .requestMatchers(HttpMethod.GET, BASE_URL + "hello").permitAll()
             // All resources under /me should be authenticated and have the customer authority
-            // .requestMatchers(BASE_URL + "me/**").authenticated() 
-            .requestMatchers(BASE_URL + "me/**").hasAuthority(RoleEnum.ROLE_CUSTOMER.toString())
+            .requestMatchers(BASE_URL + "/" + ResourceName.ME + "/**").hasAuthority(RoleEnum.ROLE_CUSTOMER.toString())
             .anyRequest().authenticated()    
         )
 

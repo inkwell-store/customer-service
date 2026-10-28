@@ -49,4 +49,20 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(httpStatus).body(body);
     }
     
+    @ExceptionHandler(UnsupportedParameterException.class)
+    public ResponseEntity<HttpErrorResponse> handleUnsupportedParameterException(UnsupportedParameterException e) {
+        int status = HttpStatus.BAD_REQUEST.value();
+        HttpErrorResponse body = new HttpErrorResponse(
+            status, HttpErrorType.INVALID_QUERY_PARAMETER, e.getMessage(), Instant.now());
+        return ResponseEntity.status(status).body(body);
+    }
+
+    @ExceptionHandler(LastBillingAddressException.class)
+    public ResponseEntity<HttpErrorResponse> handleUnsupportedParameterException(LastBillingAddressException e) {
+        int status = HttpStatus.CONFLICT.value();
+        HttpErrorResponse body = new HttpErrorResponse(
+            status, HttpErrorType.INVALID_QUERY_PARAMETER, e.getMessage(), Instant.now());
+        return ResponseEntity.status(status).body(body);
+    }
+
 }

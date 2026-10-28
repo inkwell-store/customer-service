@@ -46,6 +46,9 @@ public class Customer {
     @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
 
+    @Column(name = "photo")
+    private String photo;
+
     // attribute that references a credential from Credential Service
     @Column(name = "credential_id", nullable = false, unique = true)
     private UUID credentialId;

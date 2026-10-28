@@ -2,5 +2,6 @@ package com.wilson.inkwell.customer.enums;
 
 public enum HttpErrorType {
     RESOURCE_NOT_FOUND,
-    VALIDATION_ERROR
+    VALIDATION_ERROR,
+    INVALID_QUERY_PARAMETER
 }

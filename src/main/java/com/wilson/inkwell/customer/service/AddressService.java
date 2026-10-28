@@ -14,6 +14,7 @@ import com.wilson.inkwell.customer.entity.Address;
 import com.wilson.inkwell.customer.entity.Customer;
 import com.wilson.inkwell.customer.exception.AddressNotFoundException;
 import com.wilson.inkwell.customer.exception.CustomerNotFoundException;
+import com.wilson.inkwell.customer.exception.LastBillingAddressException;
 import com.wilson.inkwell.customer.repository.AddressRepository;
 import com.wilson.inkwell.customer.repository.CustomerRepository;
 
@@ -73,6 +74,7 @@ public class AddressService {
         return addressList;
     }
 
+    @Transactional 
     public void deleteAddressById(long id) {
         UUID uuid = getAuthenticatedUuid();
         
@@ -80,6 +82,10 @@ public class AddressService {
             () -> new AddressNotFoundException("Address not found")
         );
 
+        if(addressRepository.getBillingAddressCount(uuid) <= 1) {
+            throw new LastBillingAddressException("Cannot delete address, because it's the only billing option");
+        }
+        
         addressRepository.delete(address);
     }
 
@@ -105,6 +111,8 @@ public class AddressService {
 
     }
 
+    // TODO use a selective query to only fetch the information required instead of
+    // grabbing the whole entity
     private AddressResponse convertFromEntityToDto(Address entity) {
 
         return new AddressResponse(
